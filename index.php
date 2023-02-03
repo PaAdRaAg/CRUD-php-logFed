@@ -17,7 +17,7 @@
     echo "SECCION PUBLICA";
     if($saml->isAuthenticated()) //Si el usuario ya esta autenticado en saml
         { $atributos= $saml->getAttributes(); //Obtener sus atributos
-        echo "<br> Existe sesi&oacute;n a nombre de ".$atributos["uCuenta"][0]."<br><a href='./privada/'>Ir a secci&oacute;n privada</a>"; //Imprimir el atributo uNombre
+        echo "<br> Existe sesi&oacute;n a nombre de ".$atributos["uNombre"][0]."<br><a href='./privada/index.php'>Ir a secci&oacute;n privada</a>"; //Imprimir el atributo uNombre
 
     }
     else 
@@ -48,7 +48,6 @@
             </thead>
             <tbody>
                 <?php
-
                 $sql = "SELECT * FROM crud";
                 $result = mysqli_query($conn, $sql);
                 while($row = mysqli_fetch_assoc($result)) {
