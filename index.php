@@ -12,16 +12,18 @@
     <nav class="navbar navbar-light justify-content-center fs-m mb-5" style="font-size: 30px">CRUD PHP</nav>
 
     <?php
-    include 'db_conn.php';
-    require_once('config.php');
-    echo "SECCION PUBLICA";
-    if($saml->isAuthenticated()) //Si el usuario ya esta autenticado en saml
-        { $atributos= $saml->getAttributes(); //Obtener sus atributos
-        echo "<br> Existe sesi&oacute;n a nombre de ".$atributos["uNombre"][0]."<br><a href='./privada/index.php'>Ir a secci&oacute;n privada</a>"; //Imprimir el atributo uNombre
+        include 'db_conn.php';
 
-    }
-    else 
-        echo "<br>No hay sesi&oacute;n iniciada<br><a href='./privada/'>Iniciar sesi&oacute;n</a>";
+        require_once('config.php');
+        echo "SECCION PUBLICA";
+        if($saml->isAuthenticated()) //Si el usuario ya esta autenticado en saml
+            { $atributos= $saml->getAttributes(); //Obtener sus atributos
+            echo "<br> Existe sesi&oacute;n a nombre de ".$atributos["uNombre"][0]."<br><a href='./privada/index.php'>Ir a secci&oacute;n privada</a>"; //Imprimir el atributo uNombre
+
+        }
+        else {
+            echo "<br>No hay sesi&oacute;n iniciada<br><a href='./privada/'>Iniciar sesi&oacute;n</a>";
+        }
     ?>
 
     <div class="container">
@@ -33,7 +35,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>';
             }
-            ?>
+        ?>
 
         <table class="table table-hover text-center">
             <thead class="table-dark">
@@ -48,9 +50,9 @@
             </thead>
             <tbody>
                 <?php
-                $sql = "SELECT * FROM crud";
-                $result = mysqli_query($conn, $sql);
-                while($row = mysqli_fetch_assoc($result)) {
+                    $sql = "SELECT * FROM crud";
+                    $result = mysqli_query($conn, $sql);
+                    while($row = mysqli_fetch_assoc($result)) {
                 ?>
                 <tr>
                     <td><?php echo $row['id'] ?></td>
