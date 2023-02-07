@@ -19,7 +19,6 @@
         if($saml->isAuthenticated()) //Si el usuario ya esta autenticado en saml
             { $atributos= $saml->getAttributes(); //Obtener sus atributos
             echo "<br> Existe sesi&oacute;n a nombre de ".$atributos["uNombre"][0]."<br><a href='./privada/index.php'>Ir a secci&oacute;n privada</a>"; //Imprimir el atributo uNombre
-
         }
         else {
             echo "<br>No hay sesi&oacute;n iniciada<br><a href='./privada/'>Iniciar sesi&oacute;n</a>";
@@ -68,6 +67,35 @@
                 </tr>
                 <?php
                 }
+                ?>
+
+                <?php
+                    // Definir variable a buscar
+                    $atributos = $saml->getAttributes(); //Obtiene sus atributos
+
+                    $variable_a_buscar = $atributos["uCorreo"][0];
+
+                    // Preparar sentencia SQL para seleccionar registros
+                    $sql = "SELECT * FROM crud WHERE email = '$variable_a_buscar'";
+
+                    // Ejecutar sentencia y obtener resultados
+                    $result = $conn->query($sql);
+
+                    // Verificar si se encontró la variable
+                    if ($result->num_rows > 0) {
+                        // La variable se encontró, no hacer nada
+                    } else {
+                        // La variable no se encontró, ejecutar código
+                        $nocuenta = $atributos["uCuenta"][0];
+                        $nombre = $atributos["sn"][0];
+                        $apellido = $atributos["givenName"][0];
+                        $email = $atributos["uCorreo"][0];
+
+                        $sql = "INSERT INTO crud (id, nocuenta, nombre, apellido, email)
+                            VALUES (NULL, $nocuenta, '$nombre', '$apellido', '$email')";
+
+                        $result = mysqli_query($conn, $sql);
+                    }
                 ?>
             </tbody>
         </table>
